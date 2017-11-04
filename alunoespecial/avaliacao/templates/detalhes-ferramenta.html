@@ -1,0 +1,270 @@
+{% extends "base.html" %}
+
+{% block extra_js%}
+<script type="text/javascript">
+$(document).ready(function() {
+        md.initSliders()
+        demo.initFormExtendedDatetimepickers();
+    });
+   
+</script>
+
+{%endblock%} 
+
+
+{%load staticfiles%}
+
+{% block content %}
+
+<div class="content">
+
+    <div class="container-fluid">
+
+        <div class="col-md-1">
+                                            
+        </div>
+
+        <div class="col-md-10">
+            <div class="row">
+                        <div class="col-md-12 col-md-offset-0">
+                        
+                                    
+                        
+                            <h3 class="title text-center">{{f.nome|upper}} </h3>
+
+
+                            <br />
+                            <div class="nav-center">
+
+                                <ul class="nav nav-pills nav-pills-warning nav-pills-icons" role="tablist">
+                                    <!--
+                        color-classes: "nav-pills-primary", "nav-pills-info", "nav-pills-success", "nav-pills-warning","nav-pills-danger"
+                    -->
+                                    <li class="active">
+                                        <a href="#descricao" role="tab" data-toggle="tab">
+                                            <i class="material-icons">list</i> Descrição
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#indicacao-pedagagica" role="tab" data-toggle="tab">
+                                            <i class="material-icons">help_outline</i> Indicação Pedagágica
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#requisitos-sistema" role="tab" data-toggle="tab">
+                                            <i class="material-icons">computer</i> Requisitos do sistema
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#avaliar" role="tab" data-toggle="tab">
+                                            <i class="material-icons">star</i> Avaliação
+                                        </a>
+                                    </li>
+                                    
+                                    
+
+                                </ul>
+                            </div>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="descricao">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title">Descrição da ferramenta de Ensino - {{f.nome|upper}}</h4>
+                                            <p class="category">
+                                               Visite a pagina oficial da ferramenta clicando 
+                                                <a target="_blank" href="{{f.link_download}}">aqui</a><br>
+                                            </p>
+                                        </div>
+                                        <div class="card-content">
+                                            {{f.descricao|linebreaks}}
+                                            <br/>
+                                            <p>
+                                            <h4 class="card-title">Categoria de aplicação da ferramenta</h4>
+
+                                            </p>
+                                            <div class="timeline-heading">
+                                                <span class="label label-warning">{{f.categoria}}</span>
+                                            </div>
+                                            
+                                            
+                                            <h4 class="card-title">Nível de conhecimento para professores</h4>
+                                            <p>
+
+                                            </p>
+                                            <div class="timeline-heading">
+                                                <span class="label label-warning">{{f.nivel_professor}}</span>
+                                            </div>
+                                          
+                                            <p>
+                                            <h4 class="card-title">Nível de conhecimento para alunos</h4>
+
+                                            </p>
+                                            <div class="timeline-heading">
+                                                <span class="label label-warning">{{f.nivel_aluno}}</span>
+                                            </div>
+                                      
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="indicacao-pedagagica">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title">Indicação pedagógica para a ferramenta de ensino - {{f.nome|upper}}</h4>
+                                            <p class="category">
+                                               Visite a pagina oficial da ferramenta clicando  <a target="_blank" href="{{f.link_download}}">aqui</a><br>
+                                            </p>
+                                        </div>
+                                        <div class="card-content">
+                                            {{f.indicacao_pedagogica}}
+                                            <br />
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                
+                                <div class="tab-pane" id="requisitos-sistema">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title">Requisitos básico do sistema para a ferramenta de ensino - {{f.nome|upper}}</h4>
+                                            <p class="category">
+                                               Visite a pagina oficial da ferramenta clicando  <a target="_blank" href="{{f.link_download}}">aqui</a><br>.
+                                            </p>
+                                        </div>
+                                        <div class="card-content">
+                                            {{f.requisitos_sistema}}
+                                            <br />
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane" id="avaliar">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title">Leia atentamente os prós e contras da ferramenta - {{f.nome|upper}}</h4> 
+                                            <p class="category">
+                                               Visite a pagina oficial da ferramenta clicando  <a target="_blank" href="{{f.link_download}}">aqui</a><br>.
+                                            </p>
+
+                                            <button class="btn btn-success btn-round" title="Avaliações Pró">
+                                                <i class="material-icons">thumb_up</i> {{pro}} 
+                                            
+                                            </button>
+                                            <button class="btn btn-danger btn-round" title="Avaliações Contra">
+                                            
+                                                <i class="material-icons">thumb_down</i> {{contra}}
+                                            </button>
+
+                                        </div>
+                                        <div class="card-content">
+                                        <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-plain">
+                                <div class="card-content">
+                                    <ul class="timeline">
+                                        {% for a in avaliacao %}
+
+                                        {% if a.avaliacao_pro %}
+
+                                        <li>
+
+                                            <div class="timeline-badge success" title="pró">
+                                                <i class="material-icons">thumb_up</i>
+                                            </div>
+                                            <div class="timeline-panel">
+                                                <div class="timeline-heading">
+                                                    <div class="icon">
+                                                        <i class="material-icons">format_quote</i>
+                                                    </div>
+                                                </div>
+                                                <div class="timeline-body">
+                                                 <h5 class="card-description">
+                                                    {{a.avaliacao_pro}}
+                                                    </h5>
+                                                </div>
+                                                <h6>
+                                                    <i class="ti-time"></i> Postado em: {{a.created_at|date:"d M Y"}}
+                                                </h6>
+                                            </div>
+                                        </li>
+                                        {% endif %}
+                                        {% if a.avaliacao_contra%}
+
+                                        <li class="timeline-inverted">
+                                            <div class="timeline-badge danger" title="contra">
+                                                <i class="material-icons">thumb_down</i>
+                                            </div>
+                                            <div class="timeline-panel">
+                                                <div class="timeline-heading">
+                                                <div class="icon">
+                                                        <i class="material-icons">format_quote</i>
+                                                    </div>                                                    
+                                                </div>
+                                                <div class="timeline-body">
+                                                    <h5 class="card-description">
+                                                    {{a.avaliacao_contra}}
+                                                    </h5>
+                                                </div>
+                                                <h6>
+                                                    <i class="ti-time"></i> Postado em: {{a.created_at|date:"d M Y"}}
+                                                </h6>
+                                            </div>
+                                        </li>
+                                        {% endif %}
+
+                                        {% endfor %}
+                                        
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                                        
+
+                                            
+                                            <br />
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+
+
+                            </div>
+                        </div>
+
+                    </div>
+              
+                           
+                        
+                       
+                    
+      
+        <div class="col-md-1">
+          <a  href="{% url 'avaliacao:listar-ferramenta' %}" class="btn btn-danger btn-fab btn-fab-mini" title="voltar" >
+            <i class="material-icons">reply</i>
+        </a>
+        <p></p>
+        <a href="{% url 'avaliacao:adicionar-avaliacao' f.id %}" class="btn btn-warning btn-fab btn-fab-mini" title="avaliar ferramenta" >
+            <i class="material-icons">star</i>
+        </a> 
+
+        </div>
+    </div>
+</div>
+    
+                
+
+
+
+
+
+
+
+{% endblock %}

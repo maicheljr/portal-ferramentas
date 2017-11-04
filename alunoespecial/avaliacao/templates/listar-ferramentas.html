@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+
+{% block extra_js%}
+<script type="text/javascript">
+$(document).ready(function() {
+        md.initSliders()
+        demo.initFormExtendedDatetimepickers();
+    });
+
+
+
+   
+</script>
+
+{%endblock%} 
+
+{%load staticfiles%}
+
+{% block content %}
+
+<div class="content">
+
+<div class="col-md-1">
+</div>
+<div class="col-md-10">
+<!-- 
+<h3 style="color: #fff">Filtros</h3>
+
+-->
+
+                            <div class="card">
+                              <form method="post" action="{% url 'avaliacao:listar-ferramenta' %} " enctype="multipart/form-data">
+                                    {% csrf_token %}
+
+                                    <div class="card-header card-header-icon" data-background-color="green">
+                                        <i class="material-icons">find_in_page</i>
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <div class="row">
+                                        <div class="card-content">
+                                        <div class="col-lg-4 col-md-6 col-sm-3">
+                                                    <select class="selectpicker" data-style="btn btn-primary btn-round" title="Categoria" data-size="7" name="categoria" >
+
+                                                        
+
+                                                        {% for c in categoria %}
+                                                            <option>{{c.nome|upper}}</option>                    
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-lg-4 col-md-6 col-sm-3">
+                                                    <select class="selectpicker" data-style="btn btn-primary btn-round" title="Nível Docente" data-size="7" name="nivel_docente" >
+
+                                                       
+
+                                                        {% for p in nivel_docente %}
+                                                            <option>{{p.nome|upper}}</option>                    
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-lg-4 col-md-6 col-sm-3">
+                                                    <select class="selectpicker" data-style="btn btn-primary btn-round" title="Nível Dicente" data-size="7" name="nivel_dicente">
+
+                                                        
+
+                                                        {% for a in nivel_dicente %}
+                                                            <option>{{a.nome|upper}}</option>                    
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+
+                                    </div>
+
+                                    </div>
+                                    <div class="row">
+
+                                        
+                                        <div class="col-md-8">
+                                            <div class="card-content">
+                                            
+                                                <div class="form-group form-search is-empty">
+                                                    <input type="text" class="form-control" placeholder="Buscar por texto" name="palavra">
+                                                    <span class="material-input"></span>
+                                                </div>
+                            
+                        
+                                            </div>
+
+                                            
+                                        </div>
+                                        
+                                        <div class="col-md-4">
+                                            <div class="card-content">
+                                            <div class="col-md-12">
+                                                <div class="footer text-center">
+                                                <button type="submit" class="btn btn-round btn-danger">buscar</button>
+                                                </div>
+                                            </div> 
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                   
+                            </form>
+                                    <div class="card-content">                                              
+                                        
+                                    </div>            
+                                </div>
+                            <br>
+                            
+                            
+                            <br>
+                            <br>
+                        </div>
+
+<div class="col-md-1">
+</div>
+    
+                
+
+<div class="col-md-12">
+                    <br>
+                    
+                    <div class="col-md-1">
+                    </div>
+                    <div class="col-md-10">
+                    <!-- 
+<h3 style="color: #fff">Filtros</h3>
+
+-->
+                    <h3 >Catálogo de Ferramentas </h3>
+                    <div class="card-content">
+                        
+
+                    </div>
+
+                    <div class="row">
+                    {% for f in ferramenta %}
+                        <div class="col-md-4">
+                            <div class="card card-product">
+                                <a href="{% url 'avaliacao:detalhes-ferramenta' f.id %}">
+                                <div class="card-image" data-header-animation="true">
+                                    {% if f.imagem %}
+                                        <img class="img" src="{{ f.imagem.url }}">
+                                    {% else %}
+                                        <img class="img" src="{% static 'img/cover.jpeg' %}">
+                                    {% endif %}
+                                </div>
+                                </a>
+                                <div class="card-content">
+                                    <div class="card-actions">
+                                        <button type="button" class="btn btn-danger btn-simple fix-broken-card">
+                                            <i class="material-icons">build</i> Fix Header!
+                                        </button>
+                                        <a href="{% url 'avaliacao:detalhes-ferramenta' f.id %}" class="btn btn-warning btn-simple" rel="tooltip" data-placement="bottom" title="Detalhes">
+                                            <i class="material-icons">art_track</i>
+                                        </button>
+                                        
+                                        {% if user.usuario.nivel_acesso == 'administrador' %}
+                                        <a href="{% url 'avaliacao:editar-ferramenta' f.id %}" class="btn btn-success btn-simple" rel="tooltip" data-placement="bottom" title="Editar">
+                                            <i class="material-icons">edit</i>
+                                        </a>
+
+                                        <a href="{% url 'avaliacao:excluir-ferramenta' f.id %}" class="btn btn-danger btn-simple" rel="tooltip" data-placement="bottom" title="Excluir">
+                                            <i class="material-icons">close</i>
+                                        </a>
+
+                                        {% endif %}
+                                    </div>
+                                    <h4 class="card-title">
+                                        <a href="#pablo"> {{f.nome|upper}}</a>
+                                    </h4>
+                                    <div class="card-description">
+                                        {{f.descricao|linebreaks|slice:":100"}}
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="stats pull-left" >
+                                        <p class="category" title="nivel aluno"><i class="material-icons">insert_emoticon</i> - {{f.nivel_aluno}}</p>
+                                    </div>
+                                    <div class="price pull-rigth">
+                                        
+                                    </div>
+                                    
+                                </div>
+                                    
+                            </div>
+                        </div>
+                        {% endfor %}
+                        
+                                              
+                                        
+
+            </div>
+            </div>
+                        
+
+
+</div>
+<div class="col-md-1">
+</div>
+
+</div>
+
+
+
+
+
+{% endblock %}

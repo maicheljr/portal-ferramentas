@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block extra_js%}
+<script type="text/javascript">
+$(document).ready(function() {
+        md.initSliders()
+        demo.initFormExtendedDatetimepickers();
+
+
+
+    $("#btn-termo-de-uso").click(function(ev) { // for each edit contact url
+        ev.preventDefault(); // prevent navigation
+        var url = $(this).data("url"); // get the contact form url
+        
+        $("#noticeModal").load(url, function() { // load the url into the modal  
+          $('#modal1').modal('open');
+        });
+  });
+  });
+   
+</script>
+
+{%endblock%} 
+
+{%load staticfiles%}
+
+{% block content %}
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="col-md-1">                            
+        </div>
+
+        <div class="col-md-10">
+
+            <div class="card">
+                <div class="card-header card-header-icon" data-background-color="red">
+                    <i class="material-icons">report_problem</i>
+                </div>
+                <div class="card-content">
+                    <h4 class="card-title text-center" >Atenção </h4>
+                       <h4 class="card-title">
+                           
+                                        Você está tentando excluir o usuário <b>{{usr.username}} </b>, isso apagará todas as atividades dele dentro do sistema. Deseja prosseguir mesmo assim???
+                        
+                       </h4>
+
+                       <a href="{% url 'accounts:excluir-usuario' usr.id %}" class="btn btn-success btn-round pull-right">Sim</a>
+
+                       <a href="{% url 'accounts:listar-usuarios' %}" class="btn btn-danger btn-round pull-right">Não</a>
+                                    
+                               
+                </div>
+            </div> 
+       
+
+
+
+        </div>
+      
+        <div class="col-md-1">                            
+        <a  href="{% url 'accounts:listar-usuarios' %}" class="btn btn-danger btn-fab btn-fab-mini" title="pagina inicial" >
+            <i class="material-icons">reply</i>
+        </a>
+        <p></p>  
+        </div>
+        <!-- notice modal -->
+                                            <!-- end notice modal -->
+    </div>
+</div>
+    
+                
+
+
+
+
+
+
+
+{% endblock %}

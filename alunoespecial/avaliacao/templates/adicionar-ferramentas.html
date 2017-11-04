@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block extra_js%}
+<script type="text/javascript">
+
+$().ready(function() {
+        demo.initMaterialWizard();
+    });
+</script>
+
+{%endblock%} 
+
+{%load staticfiles%}
+
+{% block content %}
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-10">
+                            <div class="card">
+                                    <div class="card-header card-header-icon" data-background-color="rose">
+                                        <i class="material-icons">add_box</i>
+                                    </div>
+                                    
+                                    <div class="card-content">
+                                    <form method="post" enctype="multipart/form-data" >
+                                        
+                                    <h4 class="card-title">Adicionar Ferramentas</h4>
+                                    
+                                            {% csrf_token %}                                           
+                                            
+                                            {% for field in form %}              
+                                        <div class="form-horizontal">
+                                            <label class="control-label" for="{{field.auto_id}}">{{field.label}}</label>
+                                            {{field}}
+                                            
+                                        </div>
+                                            {% endfor %}                                         
+                                      
+                                    <button type="submit" class="btn btn-rose btn-round pull-right">Enviar dados</button>
+                                    </form>
+                                    </div>
+                   
+                            </div>
+        </div>
+        <div class="col-md-1">
+        <a  href="{% url 'avaliacao:listar-tabela-ferramenta' %}" class="btn btn-danger btn-fab btn-fab-mini" title="voltar" >
+            <i class="material-icons">reply</i>
+        </a>
+        <p></p>
+        </div>
+    </div>
+
+</div>
+    
+                
+
+
+
+
+
+
+
+{% endblock %}
